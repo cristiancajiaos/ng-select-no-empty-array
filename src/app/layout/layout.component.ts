@@ -1,6 +1,13 @@
-import { createMayBeForwardRefExpression } from '@angular/compiler';
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+
+export function arrayNotEmpty(control: AbstractControl) {
+  if (control.value.length == 0) {
+    return { empty: true }
+  }
+
+  return null;
+}
 
 @Component({
   selector: 'app-layout',
@@ -19,13 +26,18 @@ export class LayoutComponent implements OnInit {
 
   ngOnInit(): void {
     this.fooForm = this.fb.group({
-      names: new FormControl([], [Validators.required])
+      names: new FormControl([], [Validators.required, arrayNotEmpty])
     });
   }
 
-  public campoValido(field: string): boolean {
+  public campoRequerido(field: string): boolean {
     let campo = this.fooForm.controls[field];
     return campo.touched && campo.errors != null && campo.errors['required'];
+  }
+
+  public campoNoVacio(field: string): boolean {
+    let campo = this.fooForm.controls[field];
+    return campo.touched && campo.errors != null && campo.errors['empty'];
   }
 
   public onSubmit(): void {
