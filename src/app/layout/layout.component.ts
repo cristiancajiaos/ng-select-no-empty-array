@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormControl, FormGroup, ValidationErrors, Validators } from '@angular/forms';
 
-export function arrayNotEmpty(control: AbstractControl) {
+export function arrayNotEmpty(control: AbstractControl): ValidationErrors | null {
   if (control.value.length == 0) {
     return { empty: true }
   }
