@@ -1,1 +1,25 @@
-<p>layout works!</p>
+<div class="row">
+  <div class="col-12 col-lg-6">
+    <form [formGroup]="fooForm" (ngSubmit)="onSubmit()">
+      <div class="form-group mb-2">
+        <label>Nombres</label>
+        <ng-select [multiple]="true" formControlName="names">
+          <ng-option *ngFor="let name of names" [value]="name">
+            {{name}}
+          </ng-option>
+        </ng-select>
+        <small class="text-danger" *ngIf="campoValido('names')">
+          Se requiere este campo
+        </small>
+      </div>
+      <button type="submit" class="btn btn-success" [disabled]="fooForm.invalid">
+        Enviar
+      </button>
+    </form>
+
+  </div>
+</div>
+
+<hr/>
+
+<p>fooForm: {{fooForm.value | json}}</p>
